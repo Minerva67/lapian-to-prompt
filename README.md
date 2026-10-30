@@ -1,8 +1,51 @@
-# lapian-to-prompt
+# lapian-to-prompt：把拉片报告变成能复刻视频的提示词
 
-- 把一份拉片分析（逐秒镜头表 + 十节分析）转成一条可直接投喂的"视频复原提示词"—— 先自动判断该走 codegen（HTML/CSS/JS 动画，适合排版/图解/数据可视化/UI 动效/几何 MG 类） 还是文生视频（Veo/Seedance/LTX 逐镜，适合实拍人物/真实场景/情绪大片），或两者混合 （codegen + [IMG] 素材槽）。Use this WHENEVER the user has a 拉片 / shot-by-shot teardown / 逐秒镜头表 / 分镜分析 and wants to 复刻 / 复原 / 重现 / recreate that video, or says things like "把这个拉片转成 prompt" / "用 codegen 复刻这个视频" / "把这个分析变成能生成视频的提示词" / "reproduce this ad" / "turn this teardown into a video-gen prompt" — even if they don't name the target tech. This is the DOWNSTREAM step that pairs with the video-lapian skill (which produces the teardown): once a teardown exists, use this to turn it into a reproduction prompt. Also trigger when the user pastes a detailed 镜头表 / shot list and asks how to recreate that video with code or a video model. Default output 中文 框架 + 英文 prompt 正文。
+你已经有一份拉片报告（逐秒镜头表加分析），想把那支片做出来。这个 skill 把报告转成一条完整的生成提示词，可以直接交给代码动画工具或视频生成模型。
 
-一个 Claude Code skill。来自合集 [claude-skills](https://github.com/Minerva67/claude-skills)。
+## 适合什么时候用
+
+- 把一份拉片转成提示词
+- 用代码复刻一支视频
+- 手上有一份镜头表，想知道用什么工具、怎么写提示词把它做出来
+
+还没有拉片报告的话，先用 [video-lapian](https://github.com/Minerva67/video-lapian) 生成。
+
+## 它先帮你决定用什么做
+
+工具选错，成片一定做不好。大致规律是：画面越偏排版、图解、界面，越适合用代码（HTML/CSS/JS 动画）做；越偏真人实拍和真实场景，越适合交给视频模型（Veo、Seedance、LTX 等）。
+
+| 画面主体 | 建议做法 |
+|---|---|
+| 纯色底上的排版文字、数据图、示意图、界面动效、几何动画 | 代码 |
+| 真人、真实环境、情绪品牌片 | 视频模型 |
+| App 或网页界面演示 | 代码搭结构，叠加真实截图或录屏 |
+| 芯片、设备等硬件特写 | 代码搭镜头，硬件用渲染图占位 |
+
+一支片可以混用：以代码为主的片里，少数照片镜头会标成素材位；以视频模型为主的片里，个别精细动画会建议交给 AE 做。它会说明选了哪种做法和原因。
+
+它还会判断片型，共 8 种，例如品牌情绪片、功能教学片、硬件规格片、SaaS 演示片。每种片型的节奏和做法不同，不会混用。
+
+## 你会拿到什么
+
+一条完整的提示词（说明部分用中文，提示词正文用英文），包括：
+
+- 这支片最核心的视觉手法，写在开头，并在时间轴里逐拍落实
+- 按绝对时间码排列的时间轴
+- 具体色值、节奏、画面比例（竖屏 9:16 或横屏 16:9）
+- 一字不差照抄的屏幕文字
+- 音乐是否涉及版权的提醒
+
+## 怎么用
+
+- 「把这份拉片转成 codegen 提示词」，附上报告
+- 「这支片用 Seedance 怎么复刻」
+
+## 包含的文件
+
+- `SKILL.md`
+- `references/patterns.md`：8 种片型的判断方法和做法
+- `references/codegen-prompt.md`：代码路线的提示词模板
+- `references/text-to-video-prompt.md`：视频模型路线的提示词模板
 
 ## 安装
 
@@ -10,13 +53,6 @@
 git clone https://github.com/Minerva67/lapian-to-prompt.git ~/.claude/skills/lapian-to-prompt
 ```
 
-装好后在 Claude Code 里输入 `/lapian-to-prompt`，或者直接描述任务，符合条件时会自动触发。
+重启 Claude Code 后，直接描述你的任务就会触发。也可以输入 `/lapian-to-prompt` 手动调用。
 
-## 文件
-
-```
-SKILL.md
-references/codegen-prompt.md
-references/patterns.md
-references/text-to-video-prompt.md
-```
+更多 skill 见 [claude-skills](https://github.com/Minerva67/claude-skills)。
