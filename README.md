@@ -56,3 +56,7 @@ git clone https://github.com/Minerva67/lapian-to-prompt.git ~/.claude/skills/lap
 重启 Claude Code 后，直接描述你的任务就会触发。也可以输入 `/lapian-to-prompt` 手动调用。
 
 更多 skill 见 [claude-skills](https://github.com/Minerva67/claude-skills)。
+
+## 许可证
+
+MIT
