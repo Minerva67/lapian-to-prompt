@@ -2,6 +2,14 @@
 
 你已经有一份拉片报告（逐秒镜头表加分析），想把那支片做出来。这个 skill 把报告转成一条完整的生成提示词，可以直接交给代码动画工具或视频生成模型。
 
+## 示例
+
+输入是 [video-lapian](https://github.com/Minerva67/video-lapian) 拉 Figma 发布片《Introducing Figma Motion》得到的报告。判断走代码路线，照片镜头留作素材位，16:9 横屏。下图是路线判断和第三幕的时间轴。
+
+完整提示词：[examples/figma-motion-prompt.md](examples/figma-motion-prompt.md)
+
+![示例截图](examples/preview.jpg)
+
 ## 适合什么时候用
 
 - 把一份拉片转成提示词
@@ -46,6 +54,7 @@
 - `references/patterns.md`：8 种片型的判断方法和做法
 - `references/codegen-prompt.md`：代码路线的提示词模板
 - `references/text-to-video-prompt.md`：视频模型路线的提示词模板
+- `examples/`：示例产出和截图
 
 ## 安装
 
